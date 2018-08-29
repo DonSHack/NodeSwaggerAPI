@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: First API with Swagger
+# during dev, should point to your local machine
+host: localhost:4200
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /post:
+    x-swagger-router-controller: post_controller
+    get:
+      tags: 
+        - Post
+      summary: "Get all post details"
+      description: "This route can be use for get all posts"
+      operationId: index
+      consumes:
+        - application/json
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error.
+    post:
+      tags:
+        - Post
+      summary: "Create a new post"
+      description: "This route can be use for creating new posts"
+      operationId: "create"
+      consumes:
+        - application/json
+      parameters:
+        - name: post
+          in: body
+          description: "Data to create post"
+          required: true
+          schema:
+            $ref: "#/definitions/Post"
+
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error.
+    put:
+      tags:
+        - Post
+      summary: "Update a post"
+      description: "This route can be use for update posts"
+      operationId: "update"
+      consumes:
+        - application/json
+      parameters:
+        - name: update
+          in: body
+          description: "Data to update post"
+          required: true
+          schema:
+            $ref: "#/definitions/Update"
+
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error.
+    delete:
+      tags:
+        - Post
+      summary: "Delete a post"
+      description: "This route can be use for delete posts"
+      operationId: "delete"
+      consumes:
+        - application/json     
+      parameters:
+        - name: delete
+          in: body
+          description: "Data to delete post"
+          required: true
+          schema:
+            $ref: "#/definitions/Delete"
+
+      responses: 
+        '200':
+          description: OK
+        '400':
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error.
+  /post/{id}:
+    x-swagger-router-controller: post_controller
+    get:
+      tags:
+        - Post
+      summary: "get a post"
+      description: "This route can be use for get a post"
+      operationId: "getOne"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id 
+          in: path         
+          description: "id of the post"
+          required: true
+          type: number
+      responses:
+        '200':
+          description: "success"
+        default:
+          description: "error"
+
+definitions:
+  Post:
+    description: "This is the data to create post"
+    properties:
+      id:
+        type: number
+        description: "This is the unique id for the post"
+        example: 1
+      title: 
+        type: string
+        description: "This is the title of the project"
+        example: "This is a sample post title"
+      post:
+        type: string
+        description: "This is the post body"
+        example: "This is a sample post body"
+  Update:
+    description: "This is the data to update post"
+    properties:
+      id:
+        type: number
+        description: "This is the unique id for the Post."
+      title: 
+        type: string
+        description: "This is the title of the project"
+  Delete:
+    description: "This is the data to delete post"
+    properties:
+      id:
+        type: number
+        description: "This is the unique id for the Post."
